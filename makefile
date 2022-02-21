@@ -30,6 +30,3 @@ pgmrotacao.o: pgmrotacao.c teste.h
 teste.o: teste.c teste.h
 
 
-# regras de compilação
-
-
