@@ -16,7 +16,7 @@ purge: clean
 
 
 
-pgmnega: pgmnega.o teste.o
+pgmnega: pgmnega.o teste.o tratlcmd.o acessopgm.o
 
 pgmrotacao: pgmrotacao.o teste.o
 
@@ -26,7 +26,10 @@ pgmnega.o: pgmnega.c teste.h
 
 pgmrotacao.o: pgmrotacao.c teste.h
 
-
 teste.o: teste.c teste.h
+
+tratlcmd.o: tratlcmd.c tratlcmd.h
+
+acessopgm.o: acessopgm.c acessopgm.h
 
 

@@ -1,6 +1,6 @@
 #include <stdio.h>
   
-void teste (char *msg)
+void lerImg (char *msg)
 {
   printf ("%s", msg) ;
 }
