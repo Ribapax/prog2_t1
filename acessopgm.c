@@ -1,6 +1,34 @@
 #include <stdio.h>
-  
-void lerImg (char *msg)
+#include <stdlib.h>
+#define LINESIZE 1024
+
+
+void extDados (char *arquivo, int *altura, int *largura, int * maximo, char **tipo)
 {
-  printf ("%s", msg) ;
+  FILE *arq ;
+  int i ;
+  char line[LINESIZE+1] ;
+ 
+  // abre o arquivo em leitura
+  arq = fopen (arquivo, "r") ;
+  if ( ! arq )
+  {
+     perror ("Erro ao abrir arquivo") ;
+     exit (1) ;
+  }
+  printf ("Okay\n") ;
+ 
+  // lê as 10 primeiras linhas do arquivo
+  fgets (line, LINESIZE, arq) ;
+  *tipo = line;
+  printf ("%s \n", *tipo);
+  for (i=0; i<4; i++)
+  {
+    fgets (line, LINESIZE, arq) ;
+    printf ("%d: %s", i, line) ;
+  }
+ 
+  // fecha o arquivo
+  fclose (arq) ;
+  printf ("%s", arquivo) ;
 }
