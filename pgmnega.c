@@ -2,6 +2,7 @@
 #include "acessopgm.h"
 #include "tratlcmd.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[ ]){
 	
@@ -12,7 +13,7 @@ int main(int argc, char *argv[ ]){
   
   //Dados do tipo de imagem a ser filtrada
 
-  char *P="      ";
+  char *P;
   int height, width, max;
 
   
@@ -21,7 +22,18 @@ int main(int argc, char *argv[ ]){
   
   //printf("Okay. Entrada: %s e Saida: %s \n",entrada,saida);
   
+  /*Como sabemos que o tipo do arquivo só é ou P2 ou P5
+    podemos definir o tamanho da nossa string como 3 char
+*/
+  P = calloc(3,sizeof(char));
+
   extDados(entrada,&height, &width, &max, &P);
+
+  printf("altura: %d",height);
+  printf("largura: %d",width);
+  printf("valor maximo: %d",max);
+  printf("tipo: %s",P);
+
 
   return 0;
 }

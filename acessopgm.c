@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define LINESIZE 1024
+
 
 
 void extDados (char *arquivo, int *altura, int *largura, int * maximo, char **tipo)
 {
-  FILE *arq ;
+  FILE *arq;
   int i ;
   char line[LINESIZE+1] ;
  
@@ -13,8 +15,8 @@ void extDados (char *arquivo, int *altura, int *largura, int * maximo, char **ti
   arq = fopen (arquivo, "r") ;
   if ( ! arq )
   {
-     perror ("Erro ao abrir arquivo") ;
-     exit (1) ;
+    perror ("Erro ao abrir arquivo") ;
+    exit (1) ;
   }
   printf ("Okay\n") ;
  
@@ -22,10 +24,11 @@ void extDados (char *arquivo, int *altura, int *largura, int * maximo, char **ti
   fgets (line, LINESIZE, arq) ;
   *tipo = line;
   printf ("%s \n", *tipo);
+  
   for (i=0; i<4; i++)
   {
     fgets (line, LINESIZE, arq) ;
-    printf ("%d: %s", i, line) ;
+    printf ("%d: %c", i, line[0]) ;
   }
  
   // fecha o arquivo
