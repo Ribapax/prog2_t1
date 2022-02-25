@@ -14,8 +14,6 @@ clean:
 purge: clean
 	-rm -f pgmnega pgmrotacao
 
-
-
 pgmnega: pgmnega.o teste.o tratlcmd.o acessopgm.o
 
 pgmrotacao: pgmrotacao.o teste.o
