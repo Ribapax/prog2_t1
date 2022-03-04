@@ -5,6 +5,9 @@
 
 
 
+
+
+
 void extDados (char *arquivo, int *altura, int *largura, int * maximo, char **tipo)
 {
   FILE *arq;
@@ -18,20 +21,33 @@ void extDados (char *arquivo, int *altura, int *largura, int * maximo, char **ti
     perror ("Erro ao abrir arquivo") ;
     exit (1) ;
   }
-  printf ("Okay\n") ;
  
-  // lê as 10 primeiras linhas do arquivo
+  // lê a primeira linha do arquivo para saber o tipo de imagem
+
   fgets (line, LINESIZE, arq) ;
-  *tipo = line;
-  printf ("%s \n", *tipo);
+  //*tipo = line;
+  strcpy (*tipo, line);
   
-  for (i=0; i<4; i++)
+  // le as linhas qcom as informa─oes de altura, largura e valor maximo
+  // ignorando linhas de comentário 
+
+  for (i=0; i<2; i++)
   {
-    fgets (line, LINESIZE, arq) ;
-    printf ("%d: %c", i, line[0]) ;
+    fgets (line, LINESIZE, arq);
+    if(line[0]!= '#'){
+      if(i == 0){
+        char* token="";
+        token = strtok(line, " ");
+        *largura = atoi(token);
+        token = strtok(NULL, " ");
+        *altura = atoi(token);
+      }
+      else 
+        *maximo = atoi(line);
+    } 
+    else
+      i--;
   }
- 
-  // fecha o arquivo
+  
   fclose (arq) ;
-  printf ("%s", arquivo) ;
 }
