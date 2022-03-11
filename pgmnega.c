@@ -6,8 +6,7 @@
 
 int main(int argc, char *argv[]) {
 
-	
-
+  
   // Dados da linha de comando
 
   char *entrada = "", *saida = "";
@@ -17,7 +16,9 @@ int main(int argc, char *argv[]) {
   char *P;
   int height, width, max;
   int **arr;
-  //int **arr;
+  // int **arr;
+
+  Imagem image;
 
   inOutNega(argv, argc, &entrada, &saida);
 
@@ -28,8 +29,10 @@ int main(int argc, char *argv[]) {
   */
   P = calloc(3, sizeof(char));
 
-  extDadosNega(entrada, &height, &width, &max, &P, &arr);
+  //extDadosNega(entrada, &height, &width, &max, &P, &arr);
   
+  extDadosNega(entrada,&image);
+
 
   return 0;
 }

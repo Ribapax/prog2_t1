@@ -1,18 +1,18 @@
 #ifndef __ACESSO__
 #define __ACESSO__
 
-typedef struct imagem {
-    char tipo[3];
-    int largura;
-    int altura;
-    int maximo;
+typedef struct Imagem {
+    char P[3];
+    int height, width, max;
     int **matriz;
-  } imagem;
+  } Imagem;
 
 
-void extDadosNega (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr);
+//void extDadosNega (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr);
 
-void extDadosLimiar (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr, int limiar);
+void extDadosNega (char *arquivo,Imagem *img);
+
+void extDadosLimiar (char *arquivo,Imagem *img, int limiar);
 
 void extDadosMedia (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr);
 
