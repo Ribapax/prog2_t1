@@ -6,8 +6,6 @@
 
 int main(int argc, char *argv[]) {
 
-	
-
   // Dados da linha de comando
 
   char *entrada = "", *saida = "";
@@ -19,7 +17,7 @@ int main(int argc, char *argv[]) {
   int **arr;
   //int **arr;
 
-  inOutNega(argv, argc, &entrada, &saida);
+  inOutLbp(argv, argc, &entrada, &saida);
 
   // printf("Okay. Entrada: %s e Saida: %s \n",entrada,saida);
 
@@ -28,7 +26,7 @@ int main(int argc, char *argv[]) {
   */
   P = calloc(3, sizeof(char));
 
-  extDadosNega(entrada, &height, &width, &max, &P, &arr);
+  extDadosLbp(entrada, &height, &width, &max, &P, &arr);
   
 
   return 0;
