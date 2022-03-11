@@ -45,7 +45,6 @@ void extDadosNega(char *arquivo, int *altura, int *largura, int *maximo,
   // lê a primeira linha do arquivo para saber o tipo de imagem
 
   fgets(line, LINESIZE, arq);
-  //*tipo = line;
   strcpy(*tipo, line);
 
   // le as linhas qcom as informa─oes de altura, largura e valor maximo
@@ -269,7 +268,6 @@ void extDadosMedia(char *arquivo, int img->height, int img->width, int img->max,
   // lê a primeira linha do arquivo para saber o tipo de imagem
 
   fgets(line, LINESIZE, arq);
-  //*tipo = line;
   strcpy(*tipo, line);
 
   // le as linhas qcom as informa─oes de altura, largura e valor maximo
