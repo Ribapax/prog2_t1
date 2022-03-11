@@ -28,102 +28,19 @@ void initializeArr(int **arr, int width, int height) {
     for (int j = 0; j < width; j++)
       arr[i][j] = 0;
 }
-/* 
-void extDadosNega(char *arquivo, int *altura, int *largura, int *maximo,
-                  char **tipo, int **arr) {
-  FILE *arq;
-  int i;
-  char line[LINESIZE + 1];
 
-  // abre o arquivo em leitura
-  arq = fopen(arquivo, "r");
-  if (!arq) {
-    perror("Erro ao abrir arquivo");
-    exit(1);
-  }
-
-  // lê a primeira linha do arquivo para saber o tipo de imagem
-
-  fgets(line, LINESIZE, arq);
-  strcpy(*tipo, line);
-
-  // le as linhas qcom as informa─oes de altura, largura e valor maximo
-  // ignorando linhas de comentário
-
-  for (i = 0; i < 2; i++) {
-    fgets(line, LINESIZE, arq);
-    if (line[0] != '#') {
-      if (i == 0) {
-        char *token = "";
-        token = strtok(line, " ");
-        *largura = atoi(token);
-        token = strtok(NULL, " ");
-        *altura = atoi(token);
-      } else
-        *maximo = atoi(line);
-    } else
-      i--;
-  }
-  int num_value;
-  unsigned char byte_value;
-  arr = arrAlloc(*largura, *altura);
-  initializeArr(arr, *largura, *altura);
-  // printf("teste");
-  //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(*tipo, "P2", 2));
-  if (strncmp(*tipo, "P2", 2) == 0) {
-    for (int i = 0; i < *altura; i++) {
-      for (int j = 0; j < *largura; j++) {
-        fscanf(arq, "%d", &num_value);
-        arr[i][j] = num_value;
-      }
-    }
-  } else {
-    // fread(&byte_value, sizeof(char), 1, arq);
-    // printf("Okay");
-    for (int i = 0; i < *altura; i++) {
-      for (int j = 0; j < *largura; j++) {
-        fread(&byte_value, sizeof(char), 1, arq);
-        arr[i][j] = byte_value;
-      }
-    }
-  }
-  printf("%s", *tipo);
-  printf("%d %d\n", *largura, *altura);
-  printf("%d\n", *maximo);
-
-  for (int i = 0; i < *altura; i++) {
-    for (int j = 0; j < *largura; j++) {
-      printf("%d ", *maximo - arr[i][j]);
-    }
-    printf("\n");
-  }
-
-  fclose(arq);
+void escreveImg(){
+  
 }
- */
-void extDadosNega(char *arquivo, Imagem * img) {
-  FILE *arq;
-  int i;
+
+void leImg(FILE *arq,Imagem *img){
+
   char line[LINESIZE + 1];
 
-  // abre o arquivo em leitura
-  arq = fopen(arquivo, "r");
-  if (!arq) {
-    perror("Erro ao abrir arquivo");
-    exit(1);
-  }
-
-  // lê a primeira linha do arquivo para saber o tipo de imagem
-
   fgets(line, LINESIZE, arq);
-  //*tipo = line;
   strcpy(img->P, line);
 
-  // le as linhas qcom as informa─oes de altura, largura e valor maximo
-  // ignorando linhas de comentário
-
-  for (i = 0; i < 2; i++) {
+  for (int i = 0; i < 2; i++) {
     fgets(line, LINESIZE, arq);
     if (line[0] != '#') {
       if (i == 0) {
@@ -140,11 +57,7 @@ void extDadosNega(char *arquivo, Imagem * img) {
   int num_value;
   unsigned char byte_value;
   img->matriz = arrAlloc(img->width, img->height);
-  initializeArr(img->matriz, img->width, img->height);
-  // printf("teste");
-  //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(*tipo, "P2", 2));
-  if (strncmp(img->P, "P2", 2) == 0) {
+  if (img->P[1] == '2') {
     for (int i = 0; i < img->height; i++) {
       for (int j = 0; j < img->width; j++) {
         fscanf(arq, "%d", &num_value);
@@ -152,8 +65,6 @@ void extDadosNega(char *arquivo, Imagem * img) {
       }
     }
   } else {
-    // fread(&byte_value, sizeof(char), 1, arq);
-    // printf("Okay");
     for (int i = 0; i < img->height; i++) {
       for (int j = 0; j < img->width; j++) {
         fread(&byte_value, sizeof(char), 1, arq);
@@ -161,6 +72,22 @@ void extDadosNega(char *arquivo, Imagem * img) {
       }
     }
   }
+
+}
+
+void extDadosNega(char *arquivo, Imagem * img) {
+  FILE *arq;
+  //int i;
+  // abre o arquivo em leitura
+  arq = fopen(arquivo, "r");
+  if (!arq) {
+    perror("Erro ao abrir arquivo");
+    exit(1);
+  }
+
+  leImg(arq,img);
+  fclose(arq);
+  
   printf("%s", img->P);
   printf("%d %d\n", img->width, img->height);
   printf("%d\n", img->max);
@@ -172,13 +99,10 @@ void extDadosNega(char *arquivo, Imagem * img) {
     printf("\n");
   }
 
-  fclose(arq);
 }
 
 void extDadosLimiar(char *arquivo, Imagem * img, int limiar) {
   FILE *arq;
-  int i;
-  char line[LINESIZE + 1];
 
   // abre o arquivo em leitura
   arq = fopen(arquivo, "r");
@@ -187,53 +111,8 @@ void extDadosLimiar(char *arquivo, Imagem * img, int limiar) {
     exit(1);
   }
 
-  // lê a primeira linha do arquivo para saber o tipo de imagem
+  leImg(arq,img);
 
-  fgets(line, LINESIZE, arq);
-  //*tipo = line;
-  strcpy(img->P, line);
-
-  // le as linhas qcom as informa─oes de altura, largura e valor maximo
-  // ignorando linhas de comentário
-
-  for (i = 0; i < 2; i++) {
-    fgets(line, LINESIZE, arq);
-    if (line[0] != '#') {
-      if (i == 0) {
-        char *token = "";
-        token = strtok(line, " ");
-        img->width = atoi(token);
-        token = strtok(NULL, " ");
-        img->height = atoi(token);
-      } else
-        img->max = atoi(line);
-    } else
-      i--;
-  }
-  int num_value;
-  unsigned char byte_value;
-  img->matriz = arrAlloc(img->width, img->height);
-  initializeArr(img->matriz, img->width, img->height);
-  // printf("teste");
-  //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(img->P, "P2", 2));
-  if (strncmp(img->P, "P2", 2) == 0) {
-    for (int i = 0; i < img->height; i++) {
-      for (int j = 0; j < img->width; j++) {
-        fscanf(arq, "%d", &num_value);
-        img->matriz[i][j] = num_value;
-      }
-    }
-  } else {
-    // fread(&byte_value, sizeof(char), 1, arq);
-    // printf("Okay");
-    for (int i = 0; i < img->height; i++) {
-      for (int j = 0; j < img->width; j++) {
-        fread(&byte_value, sizeof(char), 1, arq);
-        img->matriz[i][j] = byte_value;
-      }
-    }
-  }
   printf("%s", img->P);
   printf("%d %d\n", img->width, img->height);
   printf("%d\n", img->max);
@@ -250,9 +129,8 @@ void extDadosLimiar(char *arquivo, Imagem * img, int limiar) {
 
   fclose(arq);
 }
-/* 
-void extDadosMedia(char *arquivo, int img->height, int img->width, int img->max,
-                   char *img->P, int **arr) {
+
+void extDadosMedia(char *arquivo, Imagem *img) {
   FILE *arq;
   int i;
   char line[LINESIZE + 1];
@@ -268,7 +146,7 @@ void extDadosMedia(char *arquivo, int img->height, int img->width, int img->max,
   // lê a primeira linha do arquivo para saber o tipo de imagem
 
   fgets(line, LINESIZE, arq);
-  strcpy(*tipo, line);
+  strcpy(img->P, line);
 
   // le as linhas qcom as informa─oes de altura, largura e valor maximo
   // ignorando linhas de comentário
@@ -279,69 +157,69 @@ void extDadosMedia(char *arquivo, int img->height, int img->width, int img->max,
       if (i == 0) {
         char *token = "";
         token = strtok(line, " ");
-        *largura = atoi(token);
+        img->width = atoi(token);
         token = strtok(NULL, " ");
-        *altura = atoi(token);
+        img->height = atoi(token);
       } else
-        *maximo = atoi(line);
+        img->max = atoi(line);
     } else
       i--;
   }
   int num_value;
   unsigned char byte_value;
-  arr = arrAlloc(*largura + 2, *altura + 2);
-  initializeArr(arr, *largura + 2, *altura + 2);
+  img->matriz = arrAlloc(img->width + 2, img->height + 2);
+  initializeArr(img->matriz, img->width + 2, img->height + 2);
   // printf("teste");
   //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(*tipo, "P2", 2));
-  if (strncmp(*tipo, "P2", 2) == 0) {
-    for (int i = 0; i < *altura + 2; i++) {
-      for (int j = 0; j < *largura + 2; j++) {
-        if (i == 0 || i == *altura - 1)
-          arr[i][j] = -1;
-        else if (j == 0 || j == *largura - 1)
-          arr[i][j] = -1;
+  //  printf("\n%d\n", strncmp(img->P, "P2", 2));
+  if (strncmp(img->P, "P2", 2) == 0) {
+    for (int i = 0; i < img->height + 2; i++) {
+      for (int j = 0; j < img->width + 2; j++) {
+        if (i == 0 || i == img->height - 1)
+          img->matriz[i][j] = -1;
+        else if (j == 0 || j == img->width - 1)
+          img->matriz[i][j] = -1;
         else {
           fscanf(arq, "%d", &num_value);
-          arr[i][j] = num_value;
+          img->matriz[i][j] = num_value;
         }
       }
     }
   } else {
     // fread(&byte_value, sizeof(char), 1, arq);
     // printf("Okay");
-    for (int i = 0; i < *altura +2; i++) {
-      for (int j = 0; j < *largura + 2; j++) {
-        if (i == 0 || i == *altura - 1)
-          arr[i][j] = -1;
-        else if (j == 0 || j == *largura - 1)
-          arr[i][j] = -1;
+    for (int i = 0; i < img->height +2; i++) {
+      for (int j = 0; j < img->width + 2; j++) {
+        if (i == 0 || i == img->height - 1)
+          img->matriz[i][j] = -1;
+        else if (j == 0 || j == img->width - 1)
+          img->matriz[i][j] = -1;
         else {
           fread(&byte_value, sizeof(char), 1, arq);
-          arr[i][j] = byte_value;
+          img->matriz[i][j] = byte_value;
           // fscanf(arq, "%d", &num_value);
           // arr[i][j] = num_value;
         }
       }
     }
   }
-  printf("%s", *tipo);
-  printf("%d %d\n", *largura, *altura);
-  printf("%d\n", *maximo);
-  int **arr2 = arrAlloc(*largura, *altura);
-  initializeArr(arr2, *largura, *altura);
+  printf("%s", img->P);
+  printf("%d %d\n", img->width, img->height);
+  printf("%d\n", img->max);
+  int **arr2 = arrAlloc(img->width, img->height);
+  initializeArr(arr2, img->width, img->height);
 
   int **arr3 = arrAlloc(3, 3);
   initializeArr(arr3, 3, 3);
   int soma = 0, n = 0;
 
-  for (int i = 1; i < *altura + 1; i++) {
+  for (int i = 1; i < img->height + 1; i++) {
 
-    for (int j = 1; j < *largura + 1; j++) {
+    for (int j = 1; j < img->width + 1; j++) {
       initializeArr(arr3, 3, 3);
       for (int c = -1; c < 2; c++) {
         for (int k = -1; k < 2; k++) {
-          arr3[c + 1][k + 1] = arr[i + c][j + k];
+          arr3[c + 1][k + 1] = img->matriz[i + c][j + k];
         }
       }
       soma = 0;
@@ -358,14 +236,14 @@ void extDadosMedia(char *arquivo, int img->height, int img->width, int img->max,
       // printf("%d ", n);
     }
   }
-  for (int i = 0; i < *altura; i++) {
-    for (int j = 0; j < *largura; j++) {
+  for (int i = 0; i < img->height; i++) {
+    for (int j = 0; j < img->width; j++) {
       printf("%d ", arr2[i][j]);
     }
     printf("\n");
   }
-  // for (int i = 0; i < *altura + 2; i++) {
-  //   for (int j = 0; j < *largura + 2; j++) {
+  // for (int i = 0; i < img->height + 2; i++) {
+  //   for (int j = 0; j < img->width + 2; j++) {
   //     printf("%d ", arr[i][j]);
   //   }
   //   printf("\n");
@@ -373,9 +251,8 @@ void extDadosMedia(char *arquivo, int img->height, int img->width, int img->max,
 
   fclose(arq);
 }
- */
-void extDadosMediana(char *arquivo, int *altura, int *largura, int *maximo,
-                   char **tipo, int **arr,int mediana) {
+
+void extDadosMediana(char *arquivo, Imagem *img,int mediana) {
   FILE *arq;
   int i;
   char line[LINESIZE + 1];
@@ -395,8 +272,8 @@ void extDadosMediana(char *arquivo, int *altura, int *largura, int *maximo,
   // lê a primeira linha do arquivo para saber o tipo de imagem
 
   fgets(line, LINESIZE, arq);
-  //*tipo = line;
-  strcpy(*tipo, line);
+  //img->P = line;
+  strcpy(img->P, line);
 
   // le as linhas qcom as informa─oes de altura, largura e valor maximo
   // ignorando linhas de comentário
@@ -407,68 +284,68 @@ void extDadosMediana(char *arquivo, int *altura, int *largura, int *maximo,
       if (i == 0) {
         char *token = "";
         token = strtok(line, " ");
-        *largura = atoi(token);
+        img->width = atoi(token);
         token = strtok(NULL, " ");
-        *altura = atoi(token);
+        img->height = atoi(token);
       } else
-        *maximo = atoi(line);
+        img->max = atoi(line);
     } else
       i--;
   }
   int num_value;
   unsigned char byte_value;
-  arr = arrAlloc(*largura + offset, *altura + offset);
-  initializeArr(arr, *largura + offset, *altura + offset);
+  img->matriz = arrAlloc(img->width + offset, img->height + offset);
+  initializeArr(img->matriz, img->width + offset, img->height + offset);
   // printf("teste");
   //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(*tipo, "P2", 2));
-  if (strncmp(*tipo, "P2", 2) == 0) {
-    for (int i = 0; i < *altura + offset; i++) {
-      for (int j = 0; j < *largura + offset; j++) {
-        if (i < offset/2 || i > *altura- offset/2+1)
-          arr[i][j] = -1;
-        else if (j < offset/2 || j > *largura - offset/2+1)
-          arr[i][j] = -1;
+  //  printf("\n%d\n", strncmp(img->P, "P2", 2));
+  if (strncmp(img->P, "P2", 2) == 0) {
+    for (int i = 0; i < img->height + offset; i++) {
+      for (int j = 0; j < img->width + offset; j++) {
+        if (i < offset/2 || i > img->height- offset/2+1)
+          img->matriz[i][j] = -1;
+        else if (j < offset/2 || j > img->width - offset/2+1)
+          img->matriz[i][j] = -1;
         else {
           fscanf(arq, "%d", &num_value);
-          arr[i][j] = num_value;
+          img->matriz[i][j] = num_value;
         }
       }
     }
   } else {
     // fread(&byte_value, sizeof(char), 1, arq);
     // printf("Okay");
-    for (int i = 0; i < *altura +2; i++) {
-      for (int j = 0; j < *largura + 2; j++) {
-        if (i == 0 || i == *altura - 1)
-          arr[i][j] = -1;
-        else if (j == 0 || j == *largura - 1)
-          arr[i][j] = -1;
+    for (int i = 0; i < img->height +2; i++) {
+      for (int j = 0; j < img->width + 2; j++) {
+        if (i == 0 || i == img->height - 1)
+          img->matriz[i][j] = -1;
+        else if (j == 0 || j == img->width - 1)
+          img->matriz[i][j] = -1;
         else {
           fread(&byte_value, sizeof(char), 1, arq);
-          arr[i][j] = byte_value;
+          img->matriz[i][j] = byte_value;
           // fscanf(arq, "%d", &num_value);
           // arr[i][j] = num_value;
         }
       }
     }
   }
-  printf("%s", *tipo);
-  printf("%d %d\n", *largura, *altura);
-  printf("%d\n", *maximo);
-  int **arr2 = arrAlloc(*largura, *altura);
-  initializeArr(arr2, *largura, *altura);
+  printf("%s", img->P);
+  printf("%d %d\n", img->width, img->height);
+  printf("%d\n", img->max);
+  int **arr2 = arrAlloc(img->width, img->height);
+  initializeArr(arr2, img->width, img->height);
 
   int **arrAux = arrAlloc(mediana, mediana);
   initializeArr(arrAux, mediana, mediana);
   int soma = 0, n = 0;
 
-  for (int i = offset/2; i < *altura + offset/2; i++) {
-    for (int j = offset/2; j < *largura + offset/2; j++) {
+  for (int i = offset/2; i < img->height + offset/2; i++) {
+    for (int j = offset/2; j < img->width + offset/2; j++) {
       initializeArr(arrAux, mediana, mediana);
       for (int c = 1-offset; c < offset; c++) {
         for (int k = 1-offset; k < offset; k++) {
-          arrAux[c + 1][k + 1] = arr[i + c][j + k];
+          arrAux[c + 1][k + 1] = img->matriz[i + c][j + k];
         }
       }
       soma = 0;
@@ -485,15 +362,15 @@ void extDadosMediana(char *arquivo, int *altura, int *largura, int *maximo,
       // printf("%d ", n);
     }
   }
-  // for (int i = 0; i < *altura; i++) {
-  //   for (int j = 0; j < *largura; j++) {
+  // for (int i = 0; i < img->height; i++) {
+  //   for (int j = 0; j < img->width; j++) {
   //     printf("%d ", arr2[i][j]);
   //   }
   //   printf("\n");
   // }
-  for (int i = 0; i < *altura + offset; i++) {
-    for (int j = 0; j < *largura + offset; j++) {
-      printf("%d ", arr[i][j]);
+  for (int i = 0; i < img->height + offset; i++) {
+    for (int j = 0; j < img->width + offset; j++) {
+      printf("%d ", img->matriz[i][j]);
     }
     printf("\n");
   }
@@ -501,8 +378,7 @@ void extDadosMediana(char *arquivo, int *altura, int *largura, int *maximo,
   fclose(arq);
 }
 
-void extDadosLbp(char *arquivo, int *altura, int *largura, int *maximo,
-                 char **tipo, int **arr) {
+void extDadosLbp(char *arquivo, Imagem *img) {
   FILE *arq;
   int i;
   char line[LINESIZE + 1];
@@ -518,8 +394,8 @@ void extDadosLbp(char *arquivo, int *altura, int *largura, int *maximo,
   // lê a primeira linha do arquivo para saber o tipo de imagem
 
   fgets(line, LINESIZE, arq);
-  //*tipo = line;
-  strcpy(*tipo, line);
+  //img->P = line;
+  strcpy(img->P, line);
 
   // le as linhas qcom as informa─oes de altura, largura e valor maximo
   // ignorando linhas de comentário
@@ -530,57 +406,57 @@ void extDadosLbp(char *arquivo, int *altura, int *largura, int *maximo,
       if (i == 0) {
         char *token = "";
         token = strtok(line, " ");
-        *largura = atoi(token);
+        img->width = atoi(token);
         token = strtok(NULL, " ");
-        *altura = atoi(token);
+        img->height = atoi(token);
       } else
-        *maximo = atoi(line);
+        img->max = atoi(line);
     } else
       i--;
   }
   int num_value;
   unsigned char byte_value;
-  arr = arrAlloc(*largura + 2, *altura + 2);
-  initializeArr(arr, *largura + 2, *altura + 2);
+  img->matriz = arrAlloc(img->width + 2, img->height + 2);
+  initializeArr(img->matriz, img->width + 2, img->height + 2);
   // printf("teste");
   //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(*tipo, "P2", 2));
+  //  printf("\n%d\n", strncmp(img->P, "P2", 2));
 
-  if (strncmp(*tipo, "P2", 2) == 0) {
-    for (int i = 1; i < *altura + 1; i++) {
-      for (int j = 1; j < *largura + 1; j++) {
+  if (strncmp(img->P, "P2", 2) == 0) {
+    for (int i = 1; i < img->height + 1; i++) {
+      for (int j = 1; j < img->width + 1; j++) {
         fscanf(arq, "%d", &num_value);
-        arr[i][j] = num_value;
+        img->matriz[i][j] = num_value;
       }
     }
   } else {
     // fread(&byte_value, sizeof(char), 1, arq);
     // printf("Okay");
-    for (int i = 1; i < *altura + 1; i++) {
-      for (int j = 1; j < *largura + 1; j++) {
+    for (int i = 1; i < img->height + 1; i++) {
+      for (int j = 1; j < img->width + 1; j++) {
         fread(&byte_value, sizeof(char), 1, arq);
-        arr[i][j] = byte_value;
+        img->matriz[i][j] = byte_value;
       }
     }
   }
 
-  printf("%s", *tipo);
-  printf("%d %d\n", *largura, *altura);
-  printf("%d\n", *maximo);
-  int **arr2 = arrAlloc(*largura, *altura);
-  initializeArr(arr2, *largura, *altura);
+  printf("%s", img->P);
+  printf("%d %d\n", img->width, img->height);
+  printf("%d\n", img->max);
+  int **arr2 = arrAlloc(img->width, img->height);
+  initializeArr(arr2, img->width, img->height);
 
   int **arr3 = arrAlloc(3, 3);
   initializeArr(arr3, 3, 3);
   int soma = 0, n = 0;
 
-  for (int i = 1; i < *altura + 1; i++) {
+  for (int i = 1; i < img->height + 1; i++) {
 
-    for (int j = 1; j < *largura + 1; j++) {
+    for (int j = 1; j < img->width + 1; j++) {
       initializeArr(arr3, 3, 3);
       for (int c = -1; c < 2; c++) {
         for (int k = -1; k < 2; k++) {
-          if (arr[i][j] <= arr[i + c][j + k]) {
+          if (img->matriz[i][j] <= img->matriz[i + c][j + k]) {
             arr3[c + 1][k + 1] = 1;
           }
         }
@@ -599,15 +475,15 @@ void extDadosLbp(char *arquivo, int *altura, int *largura, int *maximo,
       // printf("%d ", n);
     }
   }
-  for (int i = 0; i < *altura; i++) {
-    for (int j = 0; j < *largura; j++) {
+  for (int i = 0; i < img->height; i++) {
+    for (int j = 0; j < img->width; j++) {
       printf("%d ", arr2[i][j]);
     }
     printf("\n");
   }
 
-  // for (int i = 0; i < *altura + 2; i++) {
-  //   for (int j = 0; j < *largura + 2; j++) {
+  // for (int i = 0; i < img->height + 2; i++) {
+  //   for (int j = 0; j < img->width + 2; j++) {
   //     printf("%d ", arr[i][j]);
   //   }
   //   printf("\n");
@@ -616,13 +492,10 @@ void extDadosLbp(char *arquivo, int *altura, int *largura, int *maximo,
   fclose(arq);
 }
 
-void extDadosRotacao(char *arquivo, int *altura, int *largura, int *maximo,
-                     char **tipo, int **arr) {
-  FILE *arq;
-  int i;
-  char line[LINESIZE + 1];
-  
+void extDadosRotacao(char *arquivo,Imagem *img,int angulo) {
 
+
+  FILE *arq;
   // abre o arquivo em leitura
   arq = fopen(arquivo, "r");
   if (!arq) {
@@ -630,78 +503,26 @@ void extDadosRotacao(char *arquivo, int *altura, int *largura, int *maximo,
     exit(1);
   }
 
-  // lê a primeira linha do arquivo para saber o tipo de imagem
+  leImg(arq,img);
 
-  fgets(line, LINESIZE, arq);
-  //*tipo = line;
-  strcpy(*tipo, line);
+  printf("%s", img->P);
+  printf("%d %d\n", img->height, img->width);
+  printf("%d\n", img->max);
 
-  // le as linhas qcom as informa─oes de altura, largura e valor maximo
-  // ignorando linhas de comentário
+  int **arr2 = arrAlloc(img->height, img->width);
+  initializeArr(arr2, img->height, img->width);
 
-  for (i = 0; i < 2; i++) {
-    fgets(line, LINESIZE, arq);
-    if (line[0] != '#') {
-      if (i == 0) {
-        char *token = "";
-        token = strtok(line, " ");
-        *largura = atoi(token);
-        token = strtok(NULL, " ");
-        *altura = atoi(token);
-      } else
-        *maximo = atoi(line);
-    } else
-      i--;
-  }
-  int num_value;
-  unsigned char byte_value;
-  arr = arrAlloc(*largura, *altura);
-  initializeArr(arr, *largura, *altura);
-  // printf("teste");
-  //  printf("testeokay");
-  //  printf("\n%d\n", strncmp(*tipo, "P2", 2));
+  for (int i = 0; i <= img->width - 1; i++) {
+    for (int j = 0; j <= img->height - 1; j++) {
 
-  if (strncmp(*tipo, "P2", 2) == 0) {
-    for (int i = 0; i < *altura; i++) {
-      for (int j = 0; j < *largura; j++) {
-        fscanf(arq, "%d", &num_value);
-        arr[i][j] = num_value;
-      }
-    }
-  } else {
-    // fread(&byte_value, sizeof(char), 1, arq);
-    // printf("Okay");
-    for (int i = 0; i < *altura; i++) {
-      for (int j = 0; j < *largura; j++) {
-        fread(&byte_value, sizeof(char), 1, arq);
-        arr[i][j] = byte_value;
-      }
-    }
-  }
-
-  printf("%s", *tipo);
-  printf("%d %d\n", *altura, *largura);
-  printf("%d\n", *maximo);
-
-  int **arr2 = arrAlloc(*altura, *largura);
-  initializeArr(arr2, *altura, *largura);
-
-  for (int i = 0; i <= *largura - 1; i++) {
-    for (int j = 0; j <= *altura - 1; j++) {
-
-      arr2[i][j] = arr[(*altura - 1) - j][i];
+      arr2[i][j] = img->matriz[(img->height - 1) - j][i];
       // printf("%d ", n);
     }
   }
-  // for (int i = 0; i < *altura; i++) {
-  //   for (int j = 0; j < *largura; j++) {
-  //     printf("%d ", arr2[i][j]);
-  //   }
-  //   printf("\n");
-  // }
+  
 
-  for (int i = 0; i < *largura; i++) {
-    for (int j = 0; j < *altura; j++) {
+  for (int i = 0; i < img->width; i++) {
+    for (int j = 0; j < img->height; j++) {
       printf("%d ", arr2[i][j]);
     }
     printf("\n");

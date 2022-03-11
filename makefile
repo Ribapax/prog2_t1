@@ -12,7 +12,7 @@ clean:
 	-rm -f *.o
 
 purge: clean
-	-rm -f pgmnega pgmrotacao
+	-rm -f pgmnega pgmrotacao pgmlimiar pgmmedia pgmlbp pgmrotacao pgmmediana
 
 pgmnega: pgmnega.o teste.o tratlcmd.o acessopgm.o -lm
 
@@ -42,7 +42,6 @@ pgmlimiar.o: pgmlimiar.c teste.h
 pgmmedia.o: pgmmedia.c teste.h
 
 pgmmediana.o: pgmmediana.c teste.h
-
 
 teste.o: teste.c teste.h
 

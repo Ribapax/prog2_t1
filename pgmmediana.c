@@ -14,10 +14,9 @@ int main(int argc, char *argv[]) {
 
   // Dados do tipo de imagem a ser filtrada
 
-  char *P;
-  int height, width, max;
-  int **arr;
+  
   int N;
+  Imagem image;
   //int **arr;
 
   inOutMediana(argv, argc, &entrada, &saida,&N);
@@ -28,9 +27,8 @@ printf("teste0");
   /*Como sabemos que o tipo do arquivo só é ou P2 ou P5
     podemos definir o tamanho da nossa string como 3 char
   */
-  P = calloc(3, sizeof(char));
 
-  extDadosMediana(entrada, &height, &width, &max, &P, arr,N);
+  extDadosMediana(entrada, &image,N);
   
 
   return 0;

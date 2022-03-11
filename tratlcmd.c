@@ -2,6 +2,29 @@
 //#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tratlcmd.h"
+
+void iniciaEntradaSaida(EntradaSaida * teste){
+  teste->entrada = "stdin";
+  teste->saida = "stdout";
+  teste->limiar = 50;
+  teste->angulo = 90;
+  teste->mediana = 3;
+}
+
+void inOutTeste(char *argv[], int argc, EntradaSaida * teste) {
+  for (int c = 1; c < argc; c ++) {
+    printf("%d : %s",c,argv[c]);
+  }
+  printf("%s\n",teste->entrada);
+  printf("%s\n",teste->entrada);
+  printf("%d\n",teste->limiar);
+  printf("%d\n",teste->angulo);
+  printf("%d\n",teste->mediana);
+
+}
+
+
 
 void inOutNega(char *argv[], int argc, char **in, char **out) {
   for (int c = 1; c < argc; c += 2) {
@@ -23,7 +46,7 @@ void inOutLbp(char *argv[], int argc, char **in, char **out) {
   }
 }
 
-void inOutRotacao(char *argv[], int argc, char **in, char **out) {
+void inOutRotacao(char *argv[], int argc, char **in, char **out, int *N) {
   for (int c = 1; c < argc; c += 2) {
 
     if (strcmp(argv[c], "-i") == 0)

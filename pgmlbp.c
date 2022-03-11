@@ -12,9 +12,8 @@ int main(int argc, char *argv[]) {
 
   // Dados do tipo de imagem a ser filtrada
 
-  char *P;
-  int height, width, max;
-  int **arr;
+  
+  Imagem image;
   //int **arr;
 
   inOutLbp(argv, argc, &entrada, &saida);
@@ -24,9 +23,8 @@ int main(int argc, char *argv[]) {
   /*Como sabemos que o tipo do arquivo só é ou P2 ou P5
     podemos definir o tamanho da nossa string como 3 char
   */
-  P = calloc(3, sizeof(char));
 
-  extDadosLbp(entrada, &height, &width, &max, &P, &arr);
+  extDadosLbp(entrada, &image);
   
 
   return 0;

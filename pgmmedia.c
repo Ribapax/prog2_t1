@@ -11,13 +11,10 @@ int main(int argc, char *argv[]) {
   // Dados da linha de comando
 
   char *entrada = "", *saida = "";
+  Imagem image;
 
   // Dados do tipo de imagem a ser filtrada
-
-  char *P;
-  int height, width, max;
-  int **arr;
-  int N;
+  
   //int **arr;
 
   inOutMedia(argv, argc, &entrada, &saida);
@@ -27,9 +24,9 @@ int main(int argc, char *argv[]) {
   /*Como sabemos que o tipo do arquivo só é ou P2 ou P5
     podemos definir o tamanho da nossa string como 3 char
   */
-  P = calloc(3, sizeof(char));
+ 
 
-  extDadosMedia(entrada, &height, &width, &max, &P, arr);
+  extDadosMedia(entrada, &image);
   
 
   return 0;

@@ -14,13 +14,13 @@ void extDadosNega (char *arquivo,Imagem *img);
 
 void extDadosLimiar (char *arquivo,Imagem *img, int limiar);
 
-void extDadosMedia (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr);
+void extDadosMedia (char *arquivo, Imagem *img);
 
-void extDadosMediana (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr, int mediana);
+void extDadosMediana (char *arquivo,Imagem *img, int mediana);
 
-void extDadosLbp (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr);
+void extDadosLbp (char *arquivo, Imagem *img);
 
-void extDadosRotacao (char *arquivo, int *altura, int *largura, int * maximo, char **tipo,int**arr);
+void extDadosRotacao (char *arquivo, Imagem *img, int angulo);
 
 
 #endif
