@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 int main(int argc, char *argv[]) {
@@ -16,7 +17,10 @@ int main(int argc, char *argv[]) {
   lerParametros(argv, argc, &parametros);
 
   extDadosRotacao(parametros, &image);
-  free(parametros.entrada);
-  free(parametros.saida);
+  
+  if (strcmp(parametros.entrada, "") != 0)
+    free(parametros.entrada);
+  if (strcmp(parametros.saida, "") != 0)
+    free(parametros.saida);
   return 0;
 }
