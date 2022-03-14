@@ -2,34 +2,47 @@ CFLAGS = -Wall
 
 CC = gcc
 
+LIBS = -lm
 
-#pgmnega: pgmnega.c teste.c teste.h
-#	gcc -Wall pgmnega.c teste.c -o pgmnega
-
-all: pgmnega pgmrotacao
+all: pgmnega pgmrotacao pgmlimiar pgmmedia pgmlbp pgmmediana
 
 clean:
 	-rm -f *.o
 
 purge: clean
-	-rm -f pgmnega pgmrotacao
+	-rm -f pgmnega pgmrotacao pgmlimiar pgmmedia pgmlbp pgmrotacao pgmmediana
 
+pgmnega: pgmnega.o  tratlcmd.o acessopgm.o acessoEstruturas.o $(LIBS)
 
+pgmrotacao: pgmrotacao.o  tratlcmd.o acessopgm.o acessoEstruturas.o $(LIBS)
 
-pgmnega: pgmnega.o teste.o tratlcmd.o acessopgm.o
+pgmmediana: pgmmediana.o  tratlcmd.o acessopgm.o acessoEstruturas.o $(LIBS)
 
-pgmrotacao: pgmrotacao.o teste.o
+pgmlbp: pgmlbp.o  tratlcmd.o acessopgm.o acessoEstruturas.o $(LIBS)
+
+pgmlimiar: pgmlimiar.o  tratlcmd.o acessopgm.o acessoEstruturas.o $(LIBS)
+
+pgmmedia: pgmmedia.o  tratlcmd.o acessopgm.o acessoEstruturas.o $(LIBS)
 
 
 # regras de compilação
-pgmnega.o: pgmnega.c teste.h
+pgmnega.o: pgmnega.c acessoEstruturas.o
 
-pgmrotacao.o: pgmrotacao.c teste.h
+pgmrotacao.o: pgmrotacao.c acessoEstruturas.o
 
-teste.o: teste.c teste.h
+pgmlbp.o: pgmlbp.c acessoEstruturas.o
 
-tratlcmd.o: tratlcmd.c tratlcmd.h
+pgmlimiar.o: pgmlimiar.c acessoEstruturas.o
 
-acessopgm.o: acessopgm.c acessopgm.h
+pgmmedia.o: pgmmedia.c acessoEstruturas.o
+
+pgmmediana.o: pgmmediana.c acessoEstruturas.o
+
+tratlcmd.o: tratlcmd.c tratlcmd.h acessoEstruturas.o
+
+acessopgm.o: acessopgm.c acessopgm.h acessoEstruturas.o
+
+acessoEstruturas.o: acessoEstruturas.c acessoEstruturas.h
+
 
 

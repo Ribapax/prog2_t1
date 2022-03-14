@@ -8,13 +8,15 @@
 
 int main(int argc, char *argv[]) {
 
-  Imagem image;
+
   EntradaSaida parametros;
   iniciaEntradaSaida(&parametros);
 
+  Imagem image;
+
   lerParametros(argv, argc, &parametros);
 
-  extDadosLimiar(parametros,&image);
+  extDadosLbp(parametros, &image);
 free(parametros.entrada);
   free(parametros.saida);
   return 0;

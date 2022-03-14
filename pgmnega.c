@@ -1,27 +1,28 @@
 //#include "teste.h"
+#include "acessoEstruturas.h"
 #include "acessopgm.h"
 #include "tratlcmd.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int main(int argc, char *argv[ ]){
-	
+int main(int argc, char *argv[]) {
 
-  // Dados da linha de comando
+  EntradaSaida parametros;
 
-  char *entrada="", *saida="";
+  Imagem image;
+
+  iniciaEntradaSaida(&parametros);
+
+  lerParametros(argv, argc, &parametros);
+
+  extDadosNega(parametros, &image);
+
+  if (strcmp(parametros.entrada, "") != 0)
+    free(parametros.entrada);
+  if (strcmp(parametros.saida, "") != 0)
+    free(parametros.saida);
   
-  //Dados do tipo de imagem a ser filtrada
-
-  char *P="      ";
-  int height, width, max;
-
-  
-  
-  inOut(argv, argc, &entrada, &saida);
-  
-  //printf("Okay. Entrada: %s e Saida: %s \n",entrada,saida);
-  
-  extDados(entrada,&height, &width, &max, &P);
-
   return 0;
 }

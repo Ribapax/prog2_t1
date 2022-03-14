@@ -1,10 +1,22 @@
-/* A rotação pode ser de dois tipos, fixa em 90 graus no sentido horário
- ou então livre onde o usuário entra com a flag informando o valor*/
+#include "acessopgm.h"
+#include "tratlcmd.h"
+#include "acessoEstruturas.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 
-#include "teste.h"
+int main(int argc, char *argv[]) {
 
-int main(){
-	teste("Minha casona\n");
-	return 0;
+  Imagem image;
+  EntradaSaida parametros;
+
+  iniciaEntradaSaida(&parametros);
+
+  lerParametros(argv, argc, &parametros);
+
+  extDadosRotacao(parametros, &image);
+  free(parametros.entrada);
+  free(parametros.saida);
+  return 0;
 }
